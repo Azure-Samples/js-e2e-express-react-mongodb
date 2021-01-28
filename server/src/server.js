@@ -22,6 +22,7 @@ const create = async () => {
   const dbConnection = await data.connectToDatabase();
   if (!dbConnection) throw new Error('db isn\'t connected');
 
+  app.use('/static', express.static('public/static'))
   app.use('/', routes);
   app.use(errorHandler);
 

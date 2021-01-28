@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "CONTAINERREGISTRYdiberry3.azurecr.io/client:v10"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    environment:
+      - ENVIRONMENT=production
+      - REACT_APP_API_BASE_URL=http://localhost:3005
+    restart: always
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    image: "CONTAINERREGISTRYdiberry3.azurecr.io/server:v10"
+    ports:
+      - "3005:3005"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_NAME=my-local-docker-compose-database
+      - DATABASE_COLLECTION_NAME=
+      - DATABASE_URL=mongodb://diberry-cosmosdb-mongodb:AIzw5WiA0HUw1qgBuZS0lpUoKMtcdxqWpB6knn9klnxiWpBvzMZ00zHEVhSz1sRdKYPQOPM8SZxurJkTR8I8Ag==@diberry-cosmosdb-mongodb.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@diberry-cosmosdb-mongodb@
+    restart: always

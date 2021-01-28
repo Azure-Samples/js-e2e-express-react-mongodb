@@ -11,7 +11,9 @@ import axios from "axios";
  * If using empty string, Prod client goes 
  * against same server via proxy.
 */ 
-const baseUrl = process.env.REACT_APP_API_BASE_URL || "";
+const baseUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:3005";
+
+console.log(`API SERVER: ${baseUrl}`)
 
 export const status = async () => {
   try {

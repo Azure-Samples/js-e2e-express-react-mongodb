@@ -7,9 +7,10 @@ WORKDIR /app/client
 
 COPY ["package.json", "package-lock.json", "./"]
 RUN ls
-RUN yarn install --production
+RUN yarn install 
 COPY . .
-
+RUN ls -la
+RUN ls -la public
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["npm", "run", "start:prod"]

@@ -11,6 +11,8 @@ function App(props) {
   // List from database
   const [data, setData] = useState([]);
 
+  console.log(`PROCESS.ENV: ${JSON.stringify(process.env)}`)
+  
   useEffect(() => {
     const checkApiServer = async () => {
       // If server returns URL, then API server is working
@@ -70,7 +72,7 @@ function App(props) {
           <Form addOne={onAddHandler}></Form>
 
           <hr />
-          {data.length > 0 && (
+          {(data && (data.length > 0)) && (
             <List
               list={data}
               deleteOne={onDeleteOneHandler}

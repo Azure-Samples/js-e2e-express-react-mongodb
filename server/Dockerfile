@@ -10,6 +10,6 @@ RUN ls
 RUN npm install --production
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3005
 
 CMD ["npm", "run", "start:prod"]

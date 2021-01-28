@@ -1,5 +1,5 @@
 const express = require('express');
-
+const path = require('path')
 const router = express.Router();
 const data = require('./data');
 
@@ -71,11 +71,13 @@ router.get('/state', async (req, res) => {
     res.status(400).send('No Db Url');
   }
 });
-// instead of 404 - just return home page
-router.get('*', (req, res) => {
-  timeStamp(req);
-
-  res.redirect('/');
+router.get('/', (req, res) => {
+  if (process.env.ENVIRONMENT === "production") {
+    res.sendFile(path.join(__dirname,'../public/index.html'));
+  } else {
+    res.send("API server running");
+  }
 });
+
 
 module.exports = router;
