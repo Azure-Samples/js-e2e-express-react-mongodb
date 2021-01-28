@@ -1,7 +1,7 @@
 FROM node:12.18.3
 
 LABEL version="1.0"
-LABEL description="API Server"
+LABEL description="API Server fullstack with React copied to public folder and /static route"
 
 WORKDIR /app
 COPY ./server ./server/
