@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "tutorial-container-registry-YOURNAME.azurecr.io/client:v1"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    environment:
+      - ENVIRONMENT=production
+      - REACT_APP_API_BASE_URL=http://localhost:3005
+    restart: always
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    image: "tutorial-container-registry-YOURNAME.azurecr.io/server:v1"
+    ports:
+      - "3005:3005"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_NAME=tutorial-docker-compose-database
+      - DATABASE_COLLECTION_NAME=tutorial-collection
+      - DATABASE_URL=
+    restart: always

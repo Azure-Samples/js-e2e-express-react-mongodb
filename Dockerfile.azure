@@ -1,0 +1,33 @@
+FROM node:12.18.3
+
+LABEL version="1.0"
+LABEL description="API Server fullstack with React copied to public folder and /static route"
+
+WORKDIR /app
+COPY ./server ./server/
+COPY ./client ./client/
+RUN ls
+
+RUN echo "server setup---------"
+WORKDIR /app/server
+RUN npm install --production 
+RUN ls
+
+RUN echo "client setup---------"
+WORKDIR /app/client
+RUN yarn install --production
+RUN npm run build 
+RUN ls
+
+# ROOT
+RUN echo "root setup---------"
+WORKDIR /app
+RUN ls
+RUN cp -R ./client/build ./server/public/
+
+# READY
+RUN echo "ready      ---------"
+WORKDIR /app/server
+EXPOSE 3005
+
+CMD ["npm", "run", "start:prod"]

@@ -12,6 +12,7 @@
     "test:server": "jest --detectOpenHandles --coverage",
     "test:client": "cd ../client && npm run test",
     "start": "nodemon src/index.js --unhandled-rejections=warn",
+    "start:prod": "node src/index.js --unhandled-rejections=warn",
     "start:server": "npm run build:server && npm run start",
     "start:client": "cd ../client && npm start",
     "start:full": "npm-run-all --parallel start:client start:server ",

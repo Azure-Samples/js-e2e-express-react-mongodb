@@ -1,0 +1,19 @@
+version: '3'
+
+# docker-compose -f ./docker-compose.azure.yml up --build --force-recreate --no-cache
+
+services:
+  server:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.azure
+    image: "tutorial-container-registry-YOURNAME.azurecr.io/server:v1"
+    ports:
+      - "3005:3005"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_NAME=tutorial-docker-compose-database
+      - DATABASE_COLLECTION_NAME=tutorial-collection
+      - REACT_APP_API_BASE_URL=
+      - DATABASE_URL=
+    restart: always

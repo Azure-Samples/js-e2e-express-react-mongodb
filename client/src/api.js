@@ -1,17 +1,13 @@
 import axios from "axios";
 
 /**
- * Use package.json `proxy` property to send request to
- * Express.js server
+ * 3000 = Client
+ * 3005 = Server (local) or 
+ * 3005 = Server (Azure) with create-react-app's build folder copied to server's public folder
  */
+const baseUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:3005";
 
-/**  
- * If using environment variable value, 
- * local client can go against production API server.
- * If using empty string, Prod client goes 
- * against same server via proxy.
-*/ 
-const baseUrl = process.env.REACT_APP_API_BASE_URL || "";
+console.log(`API SERVER: ${baseUrl}`)
 
 export const status = async () => {
   try {
