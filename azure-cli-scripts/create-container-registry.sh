@@ -1,51 +1,78 @@
-# https://docs.microsoft.com/en-us/azure/app-service/tutorial-custom-container?pivots=container-linux
+# YOURNAME is usually your email alias - `JOHNSMITH`
 
-# https://docs.microsoft.com/en-us/azure/app-service/tutorial-multi-container-app
+# https://docs.microsoft.com/azure/app-service/tutorial-custom-container?pivots=container-linux
 
-# https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli
+# https://docs.microsoft.com/azure/app-service/tutorial-multi-container-app
 
-# https://www.linkedin.com/pulse/dockerizing-your-react-app-mike-sparr/
+# https://docs.microsoft.com/azure/container-registry/container-registry-get-started-docker-cli
 
+# build local containers and tag and run
+docker-compose \
+  -f ./docker-compose.azure.yml \
+  up \
+  --build \
+  --remove-orphans \
+  --force-recreate
 
-# build both containers and tag and run
-docker-compose up --build
+# create your own container registry
+az acr create \
+  --resource-group tutorial-rg-westus-YOURNAME \
+  --name tutorial-container-registry-YOURNAME \
+  --sku Basic \
+  --admin-enabled true
 
-# create container registry
-az acr create --resource-group RG-WESTUS-diberry --name CONTAINERREGISTRYdiberry3 --sku Basic --admin-enabled true
-
-az acr credential show --resource-group RG-WESTUS-diberry --name CONTAINERREGISTRYdiberry3
+# get password for container to use when 
+# configuring web app
+az acr credential show \
+  --resource-group tutorial-rg-westus-YOURNAME \
+  --name tutorial-container-registry-YOURNAME
   
+# sample result
   "passwords": [
     {
       "name": "password",
-      "value": ""
+      "value": "PASSWORD1"
     },
     {
       "name": "password2",
-      "value": ""
+      "value": "PASSWORD2"
     }
   ],
   "username": "CONTAINERREGISTRYdiberry3"
   
   
-#login with docker
-docker login CONTAINERREGISTRYdiberry3.azurecr.io --username CONTAINERREGISTRYdiberry3 --password PASSWORD
+# login with docker
+docker login tutorial-rg-westus-YOURNAME.azurecr.io \
+  --username tutorial-container-registry-YOURNAME \
+  --password PASSWORD1
   
 # login to registry  
-az acr login --name CONTAINERREGISTRYdiberry3 --username CONTAINERREGISTRYdiberry3 --password PASSWORD
-
-# tag container client
-docker tag diberry/client CONTAINERREGISTRYdiberry3.azurecr.io/client:v2  
-
-docker tag nginx myregistry.azurecr.io/samples/nginx
-
-# tag container client
-docker tag diberry/server CONTAINERREGISTRYdiberry3.azurecr.io/server:v2  
+az acr login \
+  --resource-group tutorial-rg-westus-YOURNAME \
+  --name tutorial-container-registry-YOURNAME \
+  --username tutorial-container-registry-YOURNAME \
+  --password PASSWORD1
 
 # push client to container registry
-docker push CONTAINERREGISTRYdiberry3.azurecr.io/client:v18Fullstack
+docker push tutorial-container-registry-YOURNAME.azurecr.io/client:v1
 
 # push server to container registry
-docker push CONTAINERREGISTRYdiberry3.azurecr.io/server:v18Fullstack
+docker push tutorial-container-registry-YOURNAME.azurecr.io/server:v1
 
-az acr repository list -n CONTAINERREGISTRYdiberry3.azurecr.io
+# push fullstack/single to container registry
+docker push tutorial-container-registry-YOURNAME.azurecr.io/fullstack:v1
+
+# list repositories
+az acr repository list \
+  --resource-group tutorial-rg-westus-YOURNAME \
+  --name tutorial-container-registry-YOURNAME.azurecr.io
+
+# show tags in repositories
+# client has v1
+# server has v1
+az acr repository show-tags \
+  --resource-group tutorial-rg-westus-YOURNAME \
+  --name tutorial-container-registry-YOURNAME.azurecr.io \
+  --repository client \
+  --detail \
+  --suffix 
