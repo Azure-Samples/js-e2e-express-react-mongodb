@@ -1,3 +1,15 @@
+---
+page_type: sample
+languages:
+- javascript
+- typescript
+- nodejs
+name: "JavaScript end-to-end React and Express.js MongoDB sample"
+description: "Build and deploy a Express.js app with a database."
+products:
+- azure
+---
+
 # Project Name
 
 (short, 1-3 sentenced, description of the project)
