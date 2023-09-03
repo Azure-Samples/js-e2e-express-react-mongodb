@@ -68,7 +68,7 @@ const connectToDatabase = async () => {
     });
     db = mongoConnection.db(DATABASE_NAME);
 
-    console.log(`DB connected = ${dbConnected()}`);
+    console.log(`DB connected = ${db}`);
 
     return db;
   } catch (err) {
@@ -77,7 +77,7 @@ const connectToDatabase = async () => {
   }
 };
 const dbConnected = () => {
-  return db != null ? true : false;
+  return db != null;
 };
 module.exports = {
   insertDocuments,

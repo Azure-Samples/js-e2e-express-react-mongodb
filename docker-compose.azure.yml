@@ -14,6 +14,6 @@ services:
       - ENVIRONMENT=production
       - DATABASE_NAME=tutorial-docker-compose-database
       - DATABASE_COLLECTION_NAME=tutorial-collection
-      - REACT_APP_API_BASE_URL=
+      - API_BASE_URL=
       - DATABASE_URL=
     restart: always
