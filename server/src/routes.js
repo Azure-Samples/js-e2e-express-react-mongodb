@@ -1,5 +1,6 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
+
 const router = express.Router();
 const data = require('./data');
 
@@ -72,10 +73,10 @@ router.get('/state', async (req, res) => {
   }
 });
 router.get('/', (req, res) => {
-  if (process.env.ENVIRONMENT === "production") {
+  if (process.env.ENVIRONMENT === 'production') {
     res.sendFile(path.join(__dirname,'../public/index.html'));
   } else {
-    res.send("API server running");
+    res.send('API server running');
   }
 });
 
